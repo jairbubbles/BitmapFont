@@ -13,5 +13,5 @@ after_build:
 - ps: Add-Type -assembly “system.io.compression.filesystem”
 - ps: "[io.compression.zipfile]::ExtractToDirectory('SonarScanner.zip', $env:APPVEYOR_BUILD_FOLDER+'/SonarScanner')"
 - ps: "[io.compression.zipfile]::ExtractToDirectory('BuildWrapper.zip', $env:APPVEYOR_BUILD_FOLDER+'/BuildWrapper')"
-- ps: BuildWrapper/build-wrapper-win-x86/build-wrapper-win-x86-64.exe --out-dir  'Build' msbuild BitmapFont.sln
+- ps: BuildWrapper/build-wrapper-win-x86/build-wrapper-win-x86-64.exe --out-dir  'Build' msbuild BitmapFont.sln  /t:rebuild
 - ps: SonarScanner/sonar-scanner-2.6/bin/sonar-scanner.bat -D sonar.host.url='https://sonarqube.com' -D sonar.login='d5fcf62e7cba7c67b913e9edb4ecee2e9a697d52' -D sonar.projectKey="bitmap_font" -D sonar.projectName=$env:APPVEYOR_PROJECT_NAME -D sonar.projectVersion=$env:APPVEYOR_BUILD_NUMBER -D sonar.sources='BitmapFont/' -D sonar.cfamily.build-wrapper-output='Build'
