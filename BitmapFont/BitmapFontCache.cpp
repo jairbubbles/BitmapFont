@@ -16,7 +16,7 @@ namespace BitmapFont
 {
 	BitmapFontCache::BitmapFontCache(FT_Library _library) : m_library(_library)
 	{
-		m_image = (unsigned char*)malloc(WIDTH * HEIGHT * sizeof(char));
+		m_image = static_cast<unsigned char*>(malloc(WIDTH * HEIGHT * sizeof(char)));
 		std::memset(m_image, 0, WIDTH * HEIGHT * sizeof(char));
 
 		m_pools[0].init(Rect(0, 0, WIDTH, HEIGHT), 1, 1);
@@ -53,9 +53,7 @@ namespace BitmapFont
 		{
 			if (slot->getState() == Slot::State::Free && _rect.isSmallerOrEqualThan(slot->getRect()))
 			{
-				if (bestSlot == nullptr)
-					bestSlot = slot;
-				else if (slot->getRect().surface() < bestSlot->getRect().surface())
+				if (bestSlot == nullptr || slot->getRect().surface() < bestSlot->getRect().surface())
 					bestSlot = slot;
 			}
 		}
@@ -185,7 +183,6 @@ namespace BitmapFont
 		HDC hdc = ::GetDC(hwnd);
 
 		// Make a compatible DC
-		//m_pMemDC = new CDC;
 		HDC hdcBitmap = ::CreateCompatibleDC(hdc);
 		HBITMAP hBmp = ::CreateCompatibleBitmap(hdc, WIDTH, HEIGHT);
 		::SelectObject(hdcBitmap, hBmp);
@@ -235,7 +232,6 @@ namespace BitmapFont
 		::DeleteObject(hBmp);
 		::DeleteDC(hdcBitmap);
 		::ReleaseDC(hwnd, hdc);
-		//::DestroyWindow(hwnd);
 	}
 }
 
