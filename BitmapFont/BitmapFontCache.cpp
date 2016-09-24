@@ -111,7 +111,7 @@ namespace bmf
 		return OK;
 	}
 
-	unsigned int  BitmapFontCache::getPoolIndex(int _pixelSize) const
+	unsigned int  BitmapFontCache::getPoolIndex() const
 	{
 		return 0;
 	}
@@ -157,7 +157,7 @@ namespace bmf
 
 	BitmapFontCache::ReturnCode BitmapFontCache::removeGlyph(int _fontIndex, int _char, int _pixelSize)
 	{
-		unsigned int defaultPoolIndex = getPoolIndex(_pixelSize);
+		unsigned int defaultPoolIndex = getPoolIndex();
 		auto ret = m_pools[defaultPoolIndex].removeGlyph(_fontIndex, _char, _pixelSize);
 		if (ret == OK)
 			return OK;
@@ -175,6 +175,19 @@ namespace bmf
 	}
 
 	static HWND hwnd = NULL;
+
+	void showGlyph(HDC hdc, unsigned char*_image, const RECT &_rect)
+	{
+		for (int i = _rect.left; i < _rect.right; i++)
+		{
+			for (int j = _rect.top; j < _rect.bottom; j++)
+			{
+				unsigned char color = _image[i + j * WIDTH];
+				if (color != 0)
+					::SetPixel(hdc, i, j, RGB(color, color, color));
+			}
+		}
+	}
 
 	void BitmapFontCache::showImage() const
 	{
@@ -200,30 +213,22 @@ namespace bmf
 			for (auto it = freeSlots.begin(); it != freeSlots.end(); ++it)
 			{
 				const Rect& curGlyph = (*it)->getRect();
-				RECT rect = { curGlyph.left(), curGlyph.top(), curGlyph.left() + curGlyph.width(), curGlyph.top() + curGlyph.height() };
+				RECT rectSlot = { curGlyph.left(), curGlyph.top(), curGlyph.left() + curGlyph.width(), curGlyph.top() + curGlyph.height() };
 				HBRUSH hBrush = ::CreateSolidBrush(RGB((curGlyph.left() + curGlyph.top()) % 255, curGlyph.height() % 255, curGlyph.width() % 255));
-				::FillRect(hdcBitmap, &rect, hBrush);
+				::FillRect(hdcBitmap, &rectSlot, hBrush);
 				::DeleteObject(hBrush);
 			}
 
 			// Display glyphs
 			const auto& glyphs = pool.getGlyphs();
-			for (auto it = glyphs.begin(); it != glyphs.end(); ++it)
+			for (const auto& it : glyphs)
 			{
-				const Rect& curGlyph = it->second->getRect();
-				RECT rect = { curGlyph.left(), curGlyph.top(), curGlyph.left() + curGlyph.width() - pool.getPaddingX(), curGlyph.top() + curGlyph.height() - pool.getPaddingY() };
+				const Rect& curGlyph = it.second->getRect();
+				RECT rectGlyph = { curGlyph.left(), curGlyph.top(), curGlyph.left() + curGlyph.width() - pool.getPaddingX(), curGlyph.top() + curGlyph.height() - pool.getPaddingY() };
 
-				::FillRect(hdcBitmap, &rect, static_cast<HBRUSH>(::GetStockObject(BLACK_BRUSH)));
+				::FillRect(hdcBitmap, &rectGlyph, static_cast<HBRUSH>(::GetStockObject(BLACK_BRUSH)));
 
-				for (int i = rect.left; i < rect.right; i++)
-				{
-					for (int j = rect.top; j < rect.bottom; j++)
-					{
-						unsigned char color = m_image[i + j * WIDTH];
-						if (color != 0)
-							::SetPixel(hdcBitmap, i, j, RGB(color, color, color));
-					}
-				}
+				showGlyph(hdcBitmap, m_image, rectGlyph);
 			}
 		}
 
@@ -233,6 +238,8 @@ namespace bmf
 		::DeleteDC(hdcBitmap);
 		::ReleaseDC(hwnd, hdc);
 	}
+
+	
 }
 
 

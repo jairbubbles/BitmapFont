@@ -56,7 +56,7 @@ namespace bmf
 		unsigned int  getFontCount() const { return m_faces.size(); }
 
 	private:
-		unsigned int  getPoolIndex(int _pixelSize) const;
+		unsigned int  getPoolIndex() const;
 
 		class Pool
 		{
