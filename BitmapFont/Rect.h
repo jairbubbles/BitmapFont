@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-namespace BitmapFont
+namespace bmf
 {
 	class Rect
 	{

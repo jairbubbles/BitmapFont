@@ -13,7 +13,7 @@ typedef struct  FT_Bitmap_ FT_Bitmap;
 
 const int POOL_COUNT = 1;
 
-namespace BitmapFont
+namespace bmf
 {
 	class BitmapFontCache
 	{

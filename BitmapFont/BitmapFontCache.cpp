@@ -12,7 +12,7 @@
 const int WIDTH = 1024;
 const int HEIGHT = 1024;
 
-namespace BitmapFont
+namespace bmf
 {
 	BitmapFontCache::BitmapFontCache(FT_Library _library) : m_library(_library)
 	{

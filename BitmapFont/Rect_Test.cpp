@@ -2,7 +2,7 @@
 #include "Rect.h"
 #include "catch.hpp"
 
-namespace BitmapFont
+namespace bmf
 {
 	TEST_CASE("Rect works properly", "[BitmapFontCache]")
 	{
