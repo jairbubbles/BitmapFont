@@ -26,7 +26,7 @@ Add-Type -assembly system.io.compression.filesystem
 if(![System.IO.Directory]::Exists($PSScriptRoot + '\SonarScanner'))
 {
 	(new-object net.webclient).DownloadFile('http://repo1.maven.org/maven2/org/sonarsource/scanner/cli/sonar-scanner-cli/2.6/sonar-scanner-cli-2.6.zip', $PSScriptRoot +  '\SonarScanner.zip')
-	[io.compression.zipfile]::ExtractToDirectory('SonarScanner.zip', $PSScriptRoot + '\SonarScanner')
+	[io.compression.zipfile]::ExtractToDirectory($PSScriptRoot + '\SonarScanner.zip', $PSScriptRoot + '\SonarScanner')
 }
 
 $scannerCmdLine = ".\SonarScanner\sonar-scanner-2.6\bin\sonar-scanner.bat -D sonar.host.url='$hostUrl' -D sonar.login='$login' -D sonar.projectKey='$projectKey' -D sonar.projectName='$projectName' -D sonar.projectVersion='$projectVersion' -D sonar.sources='$sources'"
@@ -38,7 +38,7 @@ if($buildWrapperCommand)
 	{
 		[System.Net.ServicePointManager]::SecurityProtocol = @('Tls12','Tls11','Tls','Ssl3')
 		(new-object net.webclient).DownloadFile('http://sonarqube.com/static/cpp/build-wrapper-win-x86.zip', $PSScriptRoot + '\BuildWrapper.zip')
-		[io.compression.zipfile]::ExtractToDirectory('BuildWrapper.zip', $PSScriptRoot + '\BuildWrapper')
+		[io.compression.zipfile]::ExtractToDirectory($PSScriptRoot + '\BuildWrapper.zip', $PSScriptRoot + '\BuildWrapper')
 	}
 	
 	# Compile with BuildWrapper
