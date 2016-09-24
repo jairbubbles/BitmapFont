@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _RECT_H_
+#define _RECT_H_
+
 #include <algorithm>
 
 namespace bmf
@@ -40,5 +43,7 @@ namespace bmf
 		int x = 0, y = 0;
 	};
 }
+
+#endif
 
 

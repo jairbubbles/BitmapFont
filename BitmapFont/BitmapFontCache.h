@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _BITMAP_FONT_CACHE_H_
+#define _BITMAP_FONT_CACHE_H_
+
 #include <map>
 #include <list>
 #include <cassert>
@@ -239,4 +242,4 @@ namespace bmf
 	};
 }
 
-
+#endif
