@@ -16,7 +16,7 @@ namespace bmf
 {
 	BitmapFontCache::BitmapFontCache(FT_Library _library) : m_library(_library)
 	{
-		m_image = static_cast<unsigned char*>(malloc(WIDTH * HEIGHT * sizeof(char)));
+		m_image = new unsigned char[WIDTH * HEIGHT * sizeof(char)];
 		std::memset(m_image, 0, WIDTH * HEIGHT * sizeof(char));
 
 		m_pools[0].init(Rect(0, 0, WIDTH, HEIGHT), 1, 1);
@@ -39,7 +39,7 @@ namespace bmf
 	{
 		for (FT_Face f : m_faces)
 			FT_Done_Face(f);
-		free(m_image);
+		delete[](m_image);
 		m_image = nullptr;
 	}
 
@@ -213,7 +213,7 @@ namespace bmf
 				const Rect& curGlyph = it->second->getRect();
 				RECT rect = { curGlyph.left(), curGlyph.top(), curGlyph.left() + curGlyph.width() - pool.getPaddingX(), curGlyph.top() + curGlyph.height() - pool.getPaddingY() };
 
-				::FillRect(hdcBitmap, &rect, (HBRUSH) ::GetStockObject(BLACK_BRUSH));
+				::FillRect(hdcBitmap, &rect, static_cast<HBRUSH>(::GetStockObject(BLACK_BRUSH)));
 
 				for (int i = rect.left; i < rect.right; i++)
 				{

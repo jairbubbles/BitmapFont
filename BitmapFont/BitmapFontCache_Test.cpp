@@ -111,8 +111,6 @@ namespace bmf
 					std::advance(it, rand() % (glyphsAdded.size() - 1));
 				if (bitmapCache.removeGlyph(std::get<0>(*it), std::get<1>(*it), std::get<2>(*it)) == BitmapFontCache::OK)
 					glyphsAdded.erase(it);
-				
-				DISPLAY_RESULT
 			}
 
 			DISPLAY_RESULT
