@@ -9,5 +9,5 @@ build:
 after_build:
 - ps: (new-object net.webclient).DownloadFile('http://repo1.maven.org/maven2/org/sonarsource/scanner/cli/sonar-scanner-cli/2.6/sonar-scanner-cli-2.6.zip', 'SonarScanner.zip')
 - ps: Add-Type -assembly “system.io.compression.filesystem”
-- ps: '[io.compression.zipfile]::ExtractToDirectory('SonarScanner.zip', 'SonarScanner')'
+- ps: "[io.compression.zipfile]::ExtractToDirectory('SonarScanner.zip', 'SonarScanner')"
 - ps: ./SonarScanner/sonar-scanner-2.6/bin/sonar-scanner.bat -D sonar.host.url='https://sonarqube.com' -D sonar.login='d5fcf62e7cba7c67b913e9edb4ecee2e9a697d52' -D sonar.projectKey={APPVEYOR_PROJECT_ID} -D sonar.projectName={APPVEYOR_PROJECT_NAME} -D sonar.projectVersion={APPVEYOR_BUILD_NUMBER} -D sonar.Sources={APPVEYOR_BUILD_FOLDER}
