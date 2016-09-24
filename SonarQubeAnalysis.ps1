@@ -47,7 +47,7 @@ if($buildWrapperCommand)
 	Write-Output $builderCmdLine
 	Invoke-Expression $builderCmdLine
 	
-	$scannerParams += ' -D sonar.cfamily.build-wrapper-output=Build'
+	$scannerCmdLine += ' -D sonar.cfamily.build-wrapper-output=Build'
 }
 
 Write-Output $scannerCmdLine
