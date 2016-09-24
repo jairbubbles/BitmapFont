@@ -188,7 +188,8 @@ namespace BitmapFont
 					m_slot2 = new Slot(this, newRectA2);
 					assert((newRectA1.surface() + newRectA2.surface()) == m_rect.surface());
 				}
-
+			
+			private:
 				Slot* m_slot1 = nullptr;
 				Slot* m_slot2 = nullptr;
 				Slot* m_owner = nullptr;
@@ -228,7 +229,7 @@ namespace BitmapFont
 			ReturnCode addGlyph(const BitmapFontCache* _owner, FT_Bitmap& _bitmap, int _fontIndex, int _char, int _pixelSize);
 			ReturnCode removeGlyph(int _fontIndex, int _char, int _pixelSize);
 
-		protected:
+		private:
 			Slot*					m_rootSlot = nullptr;
 			std::list<Slot*>		m_freeSlots;
 			std::map<Key, Slot *>	m_glyphs;

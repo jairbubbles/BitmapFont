@@ -51,10 +51,10 @@ namespace BitmapFont
 		Slot *bestSlot = nullptr;
 		for (Slot *slot : m_freeSlots)
 		{
-			if (slot->getState() == Slot::State::Free && _rect.isSmallerOrEqualThan(slot->getRect()))
+			if ((slot->getState() == Slot::State::Free && _rect.isSmallerOrEqualThan(slot->getRect()))
+		    && (bestSlot == nullptr || slot->getRect().surface() < bestSlot->getRect().surface()))
 			{
-				if (bestSlot == nullptr || slot->getRect().surface() < bestSlot->getRect().surface())
-					bestSlot = slot;
+				bestSlot = slot;
 			}
 		}
 
