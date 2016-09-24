@@ -18,7 +18,7 @@ namespace bmf
 	class BitmapFontCache
 	{
 	public:
-		BitmapFontCache(FT_Library _library);
+		explicit BitmapFontCache(FT_Library _library);
 		~BitmapFontCache();
 
 		void showImage() const; // for debug
@@ -109,13 +109,9 @@ namespace bmf
 					m_state = State::Free;
 					_freeSlots.push_back(this);
 
-					if (m_owner)
+					if (m_owner && m_owner->m_slot1->m_state == State::Free && m_owner->m_slot2->m_state == State::Free)
 					{
-						if (m_owner->m_slot1->m_state == State::Free
-							&& m_owner->m_slot2->m_state == State::Free)
-						{
-							m_owner->setAsFree(_freeSlots);
-						}
+						m_owner->setAsFree(_freeSlots);
 					}
 				}
 
@@ -197,7 +193,6 @@ namespace bmf
 				State m_state = State::Free;
 			};
 
-		public:
 			void init(const Rect &_initRect, int _paddingX, int _paddingY)
 			{
 				m_paddingX = _paddingX;
