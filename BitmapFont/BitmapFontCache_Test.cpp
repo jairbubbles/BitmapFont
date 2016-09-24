@@ -7,6 +7,8 @@
 #include <ft2build.h>
 #include <freetype/freetype.h>
 
+#define DISPLAY_RESULT bitmapCache.showImage();
+
 namespace bmf
 {
 	TEST_CASE("Bitmap Font Cache works properly", "[BitmapFontCache]")
@@ -98,7 +100,9 @@ namespace bmf
 					REQUIRE(bitmapCache.getFreeSlotsCount() == (POOL_COUNT + glyphsAdded.size()));
 				}
 			}
-			//bitmapCache.showImage();
+
+			DISPLAY_RESULT
+
 			// Erase randomly 
 			while (glyphsAdded.size() > 0)
 			{
@@ -107,9 +111,12 @@ namespace bmf
 					std::advance(it, rand() % (glyphsAdded.size() - 1));
 				if (bitmapCache.removeGlyph(std::get<0>(*it), std::get<1>(*it), std::get<2>(*it)) == BitmapFontCache::OK)
 					glyphsAdded.erase(it);
-				//bitmapCache.showImage();
+				
+				DISPLAY_RESULT
 			}
-			//bitmapCache.showImage();
+
+			DISPLAY_RESULT
+
 			REQUIRE(bitmapCache.getFreeSlotsCount() == POOL_COUNT);
 		}
 
