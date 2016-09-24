@@ -116,4 +116,3 @@ namespace bmf
 		FT_Done_FreeType(library);
 	}
 }
-
