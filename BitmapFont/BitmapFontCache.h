@@ -68,9 +68,9 @@ namespace bmf
 				}
 
 			private:
+				int fontIndex;
 				int unicodeChar;
 				int pixelSize;
-				int fontIndex;
 			};
 
 			class Slot
@@ -190,10 +190,10 @@ namespace bmf
 				}
 			
 			private:
+				Rect  m_rect;
+				Slot* m_owner = nullptr;
 				Slot* m_slot1 = nullptr;
 				Slot* m_slot2 = nullptr;
-				Slot* m_owner = nullptr;
-				Rect  m_rect;
 				State m_state = State::Free;
 			};
 

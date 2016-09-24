@@ -5,7 +5,7 @@
 #include <cassert>
 
 #include <ft2build.h>
-#include FT_FREETYPE_H
+#include <freetype/freetype.h>
 
 #include <windows.h>    // Win32Api Header File 
 
