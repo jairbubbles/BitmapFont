@@ -7,6 +7,7 @@ build:
   verbosity: minimal
   
 after_build:
+- ps: "[System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")"
 - ps: (new-object net.webclient).DownloadFile('http://repo1.maven.org/maven2/org/sonarsource/scanner/cli/sonar-scanner-cli/2.6/sonar-scanner-cli-2.6.zip', 'SonarScanner.zip')
 - ps: (new-object net.webclient).DownloadFile('http://sonarqube.com/static/cpp/build-wrapper-win-x86.zip', 'BuildWrapper.zip')
 - ps: Add-Type -assembly “system.io.compression.filesystem”
