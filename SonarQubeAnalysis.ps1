@@ -24,8 +24,6 @@ Param(
 	[string]$gitHubRepository	
 )
 
-APPVEYOR_PULL_REQUEST_NUMBER
-
 Add-Type -assembly system.io.compression.filesystem
 
 # Download and unzip sonnar scanner
