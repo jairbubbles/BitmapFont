@@ -10,4 +10,4 @@ build:
 # - GITHUB_TOKEN    => token for commenting pull requests in GitHub
   
 after_build:
-- ps: .\SonarQubeAnalysis.ps1 -hostUrl $env:SONAR_HOST_URL -login $env:SONAR_TOKEN -sources BitmapFont/ -projectName $env:APPVEYOR_PROJECT_NAME -projectKey $env:APPVEYOR_PROJECT_SLUG -projectVersion $env:APPVEYOR_BUILD_NUMBER -buildWrapperCommand "msbuild  BitmapFont.sln  /t:rebuild " -gitHubPullRequest $env:APPVEYOR_PULL_REQUEST_NUMBER -gitHubOauth $GITHUB_TOKEN -gitHubRepository $env:APPVEYOR_PROJECT_SLUG
+- ps: .\SonarQubeAnalysis.ps1 -h $env:SONAR_HOST_URL -l $env:SONAR_TOKEN -s BitmapFont/ -n $env:APPVEYOR_PROJECT_NAME -k $env:APPVEYOR_PROJECT_SLUG -v $env:APPVEYOR_BUILD_NUMBER -buildWrapperCommand "msbuild  BitmapFont.sln  /t:rebuild " -gitHubPullRequest $env:APPVEYOR_PULL_REQUEST_NUMBER -gitHubOauth $GITHUB_TOKEN -gitHubRepository $env:APPVEYOR_PROJECT_SLUG

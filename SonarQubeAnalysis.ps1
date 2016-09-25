@@ -16,7 +16,7 @@ Param(
 	[alias("k")]
 	[string]$projectKey,
 	[parameter(Mandatory=$true)]
-	[alias("b")]
+	[alias("v")]
 	[string]$projectVersion,
 	[parameter(Mandatory=$true)]
 	[alias("s")]
@@ -24,8 +24,7 @@ Param(
 	[string]$buildWrapperCommand,
 	[string]$gitHubPullRequest, 
 	[string]$gitHubOauth, 
-	[string]$gitHubRepository,
-	
+	[string]$gitHubRepository	
 )
 
 APPVEYOR_PULL_REQUEST_NUMBER
