@@ -16,6 +16,6 @@ if(Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER) {
 	.\SonarQubeAnalysis.ps1 -h $env:SONAR_HOST_URL -l $env:SONAR_TOKEN -s $sources -n $env:APPVEYOR_PROJECT_NAME -k $env:APPVEYOR_PROJECT_SLUG -v $env:APPVEYOR_BUILD_NUMBER -buildWrapperCommand $buildWrapperCommand -gitHubPullRequest $env:APPVEYOR_PULL_REQUEST_NUMBER -gitHubOauth $GITHUB_TOKEN -gitHubRepository $env:APPVEYOR_REPO_NAME
 }
 # Full analysis for master branch only
-else if($env:APPVEYOR_REPO_BRANCH == 'master') {
+ElseIf($env:APPVEYOR_REPO_BRANCH == 'master') {
 	.\SonarQubeAnalysis.ps1 -h $env:SONAR_HOST_URL -l $env:SONAR_TOKEN -s $sources -n $env:APPVEYOR_PROJECT_NAME -k $env:APPVEYOR_PROJECT_SLUG -v $env:APPVEYOR_BUILD_NUMBER -buildWrapperCommand $buildWrapperCommand
 }
