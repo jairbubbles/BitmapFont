@@ -1,6 +1,3 @@
-# This assumes that the 2 following variables are defined:
-# - SONAR_HOST_URL => should point to the public URL of the SQ server (e.g. : https://sonarqube.com)
-# - SONAR_TOKEN    => token of a user who has the "Execute Analysis" permission on the SQ server
 
 Param(
 	[parameter(Mandatory=$true)]
@@ -22,7 +19,7 @@ Param(
 	[alias("s")]
 	[string]$sources,
 	[string]$buildWrapperCommand,
-	[string]$gitHubPullRequest, 
+	[int]$gitHubPullRequest, 
 	[string]$gitHubOauth, 
 	[string]$gitHubRepository	
 )
