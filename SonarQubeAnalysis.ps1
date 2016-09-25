@@ -33,7 +33,7 @@ if(![System.IO.Directory]::Exists($PSScriptRoot + '\SonarScanner'))
 	[io.compression.zipfile]::ExtractToDirectory($PSScriptRoot + '\SonarScanner.zip', $PSScriptRoot + '\SonarScanner')
 }
 
-$scannerCmdLine = ".\SonarScanner\sonar-scanner-2.6\bin\sonar-scanner.bat -D sonar.host.url='$hostUrl' -D sonar.login='$login' -D sonar.projectKey='$projectKey' -D sonar.projectName='$projectName' -D sonar.projectVersion='$projectVersion' -D sonar.sources='$sources'"
+$scannerCmdLine = ".\SonarScanner\sonar-scanner-2.6\bin\sonar-scanner.bat -e -X -D sonar.host.url='$hostUrl' -D sonar.login='$login' -D sonar.projectKey='$projectKey' -D sonar.projectName='$projectName' -D sonar.projectVersion='$projectVersion' -D sonar.sources='$sources'"
 
 #Download build wrapper (if needed)
 if($buildWrapperCommand)
