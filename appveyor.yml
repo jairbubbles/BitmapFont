@@ -5,9 +5,6 @@ before_build:
 
 build:
   verbosity: minimal
-
-# This assume that following variable is defined:  
-
   
 after_build:
-- ps: ./SonarQubeAnalysisForAppVeyor.ps1 -sources BitmapFont/ -buildWrapperCommand "msbuild  BitmapFont.sln  /t:rebuild "
+- ps: ./SonarQubeAnalysisForAppVeyor.ps1 -sources BitmapFont/ -buildWrapperCommand "msbuild  BitmapFont.sln  /t:rebuild"
