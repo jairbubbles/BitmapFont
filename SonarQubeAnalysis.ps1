@@ -1,3 +1,7 @@
+# This assumes that the 2 following variables are defined:
+# - SONAR_HOST_URL => should point to the public URL of the SQ server (e.g. : https://sonarqube.com)
+# - SONAR_TOKEN    => token of a user who has the "Execute Analysis" permission on the SQ server
+
 Param(
 	[parameter(Mandatory=$true)]
 	[alias("h")]
@@ -17,8 +21,14 @@ Param(
 	[parameter(Mandatory=$true)]
 	[alias("s")]
 	[string]$sources,
-	[string]$buildWrapperCommand 
+	[string]$buildWrapperCommand,
+	[string]$gitHubPullRequest, 
+	[string]$gitHubOauth, 
+	[string]$gitHubRepository,
+	
 )
+
+APPVEYOR_PULL_REQUEST_NUMBER
 
 Add-Type -assembly system.io.compression.filesystem
 
@@ -48,6 +58,12 @@ if($buildWrapperCommand)
 	Invoke-Expression $builderCmdLine
 	
 	$scannerCmdLine += ' -D sonar.cfamily.build-wrapper-output=Build'
+}
+
+# Pull request ?
+if($gitHubPullRequest)
+{
+	$scannerCmdLine += " -D sonar.analysis.mode=preview -D sonar.github.oauth=$gitHubOauth -D sonar.github.repository=$gitHubRepository -D sonar.github.pullRequest=$gitHubPullRequest"
 }
 
 Write-Output $scannerCmdLine

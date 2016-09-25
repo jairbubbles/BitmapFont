@@ -5,6 +5,9 @@ before_build:
 
 build:
   verbosity: minimal
+
+# This assume that following variable is defined:  
+# - GITHUB_TOKEN    => token for commenting pull requests in GitHub
   
 after_build:
-- ps: .\SonarQubeAnalysis.ps1 -hostUrl $env:SONAR_HOST_URL -login $env:SONAR_TOKEN -sources BitmapFont/ -projectName $env:APPVEYOR_PROJECT_NAME -projectKey $env:APPVEYOR_PROJECT_SLUG -projectVersion $env:APPVEYOR_BUILD_NUMBER -buildWrapperCommand "msbuild  BitmapFont.sln  /t:rebuild"
+- ps: .\SonarQubeAnalysis.ps1 -hostUrl $env:SONAR_HOST_URL -login $env:SONAR_TOKEN -sources BitmapFont/ -projectName $env:APPVEYOR_PROJECT_NAME -projectKey $env:APPVEYOR_PROJECT_SLUG -projectVersion $env:APPVEYOR_BUILD_NUMBER -buildWrapperCommand "msbuild  BitmapFont.sln  /t:rebuild " -gitHubPullRequest $env:APPVEYOR_PULL_REQUEST_NUMBER -gitHubOauth $GITHUB_TOKEN -gitHubRepository $env:APPVEYOR_PROJECT_SLUG
