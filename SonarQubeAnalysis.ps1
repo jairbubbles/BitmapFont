@@ -8,17 +8,19 @@ Param(
 	[string]$login,
 	[parameter(Mandatory=$true)]
 	[alias("n")]
-	[string]$projectName,
+	[string]$projectName, #Name of the project that will be displayed on the web interface.Set through <name> when using Maven.
 	[parameter(Mandatory=$true)]
 	[alias("k")]
 	[string]$projectKey, #The project key that is unique for each project. Allowed characters are: letters, numbers, '-', '_', '.' and ':', with at least one non-digit. When using Maven, it is automatically set to <groupId>:<artifactId>.
 	[parameter(Mandatory=$true)]
 	[alias("v")]
-	[string]$projectVersion,
+	[string]$projectVersion, # The project version. Set through <version> when using Maven.
 	[parameter(Mandatory=$true)]
 	[alias("s")]
-	[string]$sources,
+	[string]$sources, #Comma-separated paths to directories containing source files. Compatible with Maven. If not set, the source code is retrieved from the default Maven source code location. 
+	#Option build wrapper command (for C/C++/Objective-C builds)
 	[string]$buildWrapperCommand,
+	# Pull request specific arguments
 	[int]$gitHubPullRequest, #Pull request number
 	[string]$gitHubOauth,  #Personal access token generated in GitHub for the technical user (see http://docs.sonarqube.org/display/PLUG/GitHub+Plugin)	
 	[string]$gitHubRepository	#Identification of the repository. Format is: <organisation/repo>. Exemple: SonarSource/sonarqube	
@@ -57,7 +59,7 @@ if($buildWrapperCommand)
 # Pull request ?
 if($gitHubPullRequest)
 {
-	$scannerCmdLine += " -D sonar.analysis.mode=preview -D sonar.github.oauth=$gitHubOauth -D sonar.github.repository=$gitHubRepository -D sonar.github.pullRequest=$gitHubPullRequest"
+	$scannerCmdLine += " -D sonar.analysis.mode=preview -D sonar.github.oauth='$gitHubOauth' -D sonar.github.repository='$gitHubRepository' -D sonar.github.pullRequest='$gitHubPullRequest'"
 }
 
 Write-Output $scannerCmdLine
