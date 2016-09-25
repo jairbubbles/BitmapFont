@@ -9,13 +9,20 @@ Param(
 	[string]$buildWrapperCommand	
 )
 
-Write-Output $env:APPVEYOR_REPO_BRANCH
-
 # Special behavior for pull requests
 if(Test-Path env:APPVEYOR_PULL_REQUEST_NUMBER) {
+	Write-Output 'Pull Request Analysis'
+	Write-Output 'APPVEYOR_REPO_BRANCH:'
+	Write-Output $env:APPVEYOR_REPO_BRANCH
+	Write-Output 'APPVEYOR_REPO_NAME:'
+	Write-Output $env:APPVEYOR_REPO_NAME
+	Write-Output 'APPVEYOR_PULL_REQUEST_NUMBER:'
+	Write-Output $env:APPVEYOR_PULL_REQUEST_NUMBER
 	.\SonarQubeAnalysis.ps1 -h $env:SONAR_HOST_URL -l $env:SONAR_TOKEN -s $sources -n $env:APPVEYOR_PROJECT_NAME -k $env:APPVEYOR_PROJECT_SLUG -v $env:APPVEYOR_BUILD_NUMBER -buildWrapperCommand $buildWrapperCommand -gitHubPullRequest $env:APPVEYOR_PULL_REQUEST_NUMBER -gitHubOauth $GITHUB_TOKEN -gitHubRepository $env:APPVEYOR_REPO_NAME
 }
 # Full analysis for master branch only
 ElseIf($env:APPVEYOR_REPO_BRANCH -eq 'master') {
+	Write-Output 'Full Analysis'
 	.\SonarQubeAnalysis.ps1 -h $env:SONAR_HOST_URL -l $env:SONAR_TOKEN -s $sources -n $env:APPVEYOR_PROJECT_NAME -k $env:APPVEYOR_PROJECT_SLUG -v $env:APPVEYOR_BUILD_NUMBER -buildWrapperCommand $buildWrapperCommand
 }
+else {Write-Output 'Skipping Analysis'}
