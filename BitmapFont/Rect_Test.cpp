@@ -3,7 +3,7 @@
 #include "catch.hpp"
 
 namespace bmf
-{aze
+{
 	TEST_CASE("Rect works properly", "[BitmapFontCache]")
 	{
 		SECTION("Create rect")
