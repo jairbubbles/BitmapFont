@@ -2,7 +2,7 @@
 Param(
 	[parameter(Mandatory=$true)]
 	[alias("h")]
-	[string]$hostUrl,
+	[string]$hostUrl, # Server URL (see http://docs.sonarqube.org/display/SONAR/Analysis+Parameters)
 	[parameter(Mandatory=$true)]
 	[alias("l")]
 	[string]$login,
@@ -11,7 +11,7 @@ Param(
 	[string]$projectName,
 	[parameter(Mandatory=$true)]
 	[alias("k")]
-	[string]$projectKey,
+	[string]$projectKey, #The project key that is unique for each project. Allowed characters are: letters, numbers, '-', '_', '.' and ':', with at least one non-digit. When using Maven, it is automatically set to <groupId>:<artifactId>.
 	[parameter(Mandatory=$true)]
 	[alias("v")]
 	[string]$projectVersion,
@@ -19,9 +19,9 @@ Param(
 	[alias("s")]
 	[string]$sources,
 	[string]$buildWrapperCommand,
-	[int]$gitHubPullRequest, 
-	[string]$gitHubOauth, 
-	[string]$gitHubRepository	
+	[int]$gitHubPullRequest, #Pull request number
+	[string]$gitHubOauth,  #Personal access token generated in GitHub for the technical user (see http://docs.sonarqube.org/display/PLUG/GitHub+Plugin)	
+	[string]$gitHubRepository	#Identification of the repository. Format is: <organisation/repo>. Exemple: SonarSource/sonarqube	
 )
 
 Add-Type -assembly system.io.compression.filesystem
@@ -33,7 +33,7 @@ if(![System.IO.Directory]::Exists($PSScriptRoot + '\SonarScanner'))
 	[io.compression.zipfile]::ExtractToDirectory($PSScriptRoot + '\SonarScanner.zip', $PSScriptRoot + '\SonarScanner')
 }
 
-$scannerCmdLine = ".\SonarScanner\sonar-scanner-2.6\bin\sonar-scanner.bat -e -X -D sonar.host.url='$hostUrl' -D sonar.login='$login' -D sonar.projectKey='$projectKey' -D sonar.projectName='$projectName' -D sonar.projectVersion='$projectVersion' -D sonar.sources='$sources'"
+$scannerCmdLine = ".\SonarScanner\sonar-scanner-2.6\bin\sonar-scanner.bat -D sonar.host.url='$hostUrl' -D sonar.login='$login' -D sonar.projectKey='$projectKey' -D sonar.projectName='$projectName' -D sonar.projectVersion='$projectVersion' -D sonar.sources='$sources'"
 
 #Download build wrapper (if needed)
 if($buildWrapperCommand)
