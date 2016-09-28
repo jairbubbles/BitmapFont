@@ -8,7 +8,6 @@ namespace bmf
 	{
 		SECTION("Create rect")
 		{
-			int a;
 			Rect newRect(0, 0, 1024, 512);
 			REQUIRE(newRect.width() == 1024);
 			REQUIRE(newRect.height() == 512);
@@ -27,10 +26,9 @@ namespace bmf
 			REQUIRE(newRect3.left() == -256);
 			REQUIRE(newRect3.top() == -256);
 		}
-
+		
 		SECTION("surface")
 		{
-			int a;
 			Rect newRect(0, 0, 1024, 1024);
 			REQUIRE(newRect.surface() == (1024 * 1024));
 
